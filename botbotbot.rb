@@ -2,6 +2,7 @@
 
 require 'rubygems'
 require 'twitter'
+require 'yaml'
 
 class BotBotBot
   LAST_TWEET_FILE = 'last_tweet.txt'

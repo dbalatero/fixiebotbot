@@ -19,6 +19,12 @@ class BotBotBot
     set_last_tweet(results.first.id) unless results.empty?
   end
 
+  def self.retweet(user, password, message)
+    httpauth = Twitter::HTTPAuth.new(user, password)
+    client = Twitter::Base.new(httpauth)
+    client.update(message)
+  end
+
   def self.search_results(last_tweet = nil)
     search = Twitter::Search.new.from('fixie_bot')
     search = search.since(last_tweet) if last_tweet
@@ -36,16 +42,6 @@ class BotBotBot
   def self.set_last_tweet(last_tweet)
     File.open(LAST_TWEET_FILE, "wb") do |fp|
       fp.write(last_tweet)
-    end
-  end
-
-  def self.load
-    @@config = Yaml.load_file('config.yaml')
-  end
-
-  def self.save
-    File.open('config.yaml', 'wb') do |fp|
-      fp.write(@@config.to_yaml)
     end
   end
 end

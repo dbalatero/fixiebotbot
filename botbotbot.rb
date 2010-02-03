@@ -26,4 +26,14 @@ class BotBotBot
       fp.write(last_tweet)
     end
   end
+
+  def self.load
+    @@config = Yaml.load_file('config.yaml')
+  end
+
+  def self.save
+    File.open('config.yaml', 'wb') do |fp|
+      fp.write(@@config.to_yaml)
+    end
+  end
 end

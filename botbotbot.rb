@@ -6,6 +6,18 @@ require 'twitter'
 class BotBotBot
   LAST_TWEET_FILE = 'last_tweet.txt'
 
+  def self.run
+    results = search_results(get_last_tweet)
+
+    results.each do |result|
+      # retweet
+      puts "retweeting id = #{result.id}"
+    end
+
+    # write it back out again.
+    set_last_tweet(results.first.id) unless results.empty?
+  end
+
   def self.search_results(last_tweet = nil)
     search = Twitter::Search.new.from('fixie_bot')
     search = search.since(last_tweet) if last_tweet
